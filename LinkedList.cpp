@@ -4,8 +4,31 @@
 
 using namespace std;
 
-template <typename T> void LinkedList<T>::appendNode(Todo<T> *newTodo)
+template <typename T>
+LinkedList<T>::LinkedList()
 {
+    head = nullptr;
+    tail = nullptr;
+}
+
+template <typename T>
+Todo<T> *LinkedList<T>::createTodo()
+{
+    string date, description;
+
+    cout << "date for task: " << date << endl
+         << "task: " << description << endl;
+
+    Todo<T> *newTodo = new Todo<T>(description, date);
+
+    return newTodo;
+}
+
+template <typename T>
+void LinkedList<T>::appendNode()
+{
+    Todo<T> *newTodo = createTodo(); // create a new todo
+
     Node *nodePtr;
     Node *newNode = new Node;
 
@@ -13,22 +36,25 @@ template <typename T> void LinkedList<T>::appendNode(Todo<T> *newTodo)
     newNode->prev = nullptr;
     newNode->next = nullptr;
 
-    if(head == nullptr)
+    if (head == nullptr)
     {
         head = newNode;
         tail = newNode;
     }
     else
     {
-    nodePtr = tail;
-    newNode->prev = nodePtr;
-    nodePtr->next = newNode;
-    tail = newNode;
+        nodePtr = tail;
+        newNode->prev = nodePtr;
+        nodePtr->next = newNode;
+        tail = newNode;
     }
 }
 
-template <typename T> void LinkedList<T>::insertNode(Todo<T> *newTodo)
+template <typename T>
+void LinkedList<T>::insertNode()
 {
+    Todo<T> *newTodo = createTodo(); // create a new todo
+
     Node *newNode; // A new node
     Node *nodePtr; // To traverse the list
 
@@ -50,7 +76,7 @@ template <typename T> void LinkedList<T>::insertNode(Todo<T> *newTodo)
         nodePtr = head;
         // Skip all nodes whose value is less than newValue.
         // Value of node would be sorted in ascending order.
-        while (nodePtr != nullptr && nodePtr->todo < newTodo) // TODO: operator overloading for comparing todo
+        while (nodePtr != nullptr && nodePtr->todo < newTodo)
         {
             nodePtr = nodePtr->next;
         }
@@ -78,11 +104,71 @@ template <typename T> void LinkedList<T>::insertNode(Todo<T> *newTodo)
     }
 }
 
-template <class T>
-void LinkedList<T>::deleteNode(T todoID)
+template <typename T>
+void LinkedList<T>::editNode(int id)
 {
-    Node *nodePtr;      // To traverse the list
-    Node *previousNode; // To point to the previous node
+    Node *nodePtr; // to traverse list
+
+    nodePtr = head;
+
+    cout << "1: edit date" << endl
+         << "2: edit task" << endl;
+
+    int option;
+
+    while (nodePtr)
+    {
+        if (nodePtr->todo->getID() == id)
+        {
+            if (option == 1)
+            {
+                cout << "Enter new date: " << endl;
+                string date;
+                cin >> date;
+                nodePtr->todo->setDate(date);
+            }
+            else if (option == 2)
+            {
+                cout << "Enter edited task" << endl;
+                string desc;
+                cin >> desc;
+                nodePtr->todo->setDescription(desc);
+            }
+        }
+        else
+        {
+            nodePtr = nodePtr->next;
+        }
+    }
+
+    if (nodePtr == nullptr) // TODO:rewrite in exception block
+    {
+        cout << "No such node found" << endl;
+    }
+}
+
+template <typename T>
+void LinkedList<T>::searchNode(int id) const
+{
+    Node *nodePtr; // traverse the list
+
+    nodePtr = head;
+
+    while (nodePtr->todo->getID() != id)
+    {
+        nodePtr = nodePtr->next;
+    }
+
+    if (nodePtr = nullptr)
+    {
+        cout << "no such task found" << endl;
+    }
+}
+
+template <class T>
+void LinkedList<T>::deleteNode(int todoID)
+{
+    Node *nodePtr; // To traverse the list
     // If the list is empty, do nothing.
     if (!head)
         return;
@@ -101,7 +187,6 @@ void LinkedList<T>::deleteNode(T todoID)
         // not equal to num.
         while (nodePtr != nullptr && nodePtr->todo->getID() != todoID)
         {
-            previousNode = nodePtr;
             nodePtr = nodePtr->next;
         }
         // If nodePtr is not at the end of the list,
@@ -109,36 +194,38 @@ void LinkedList<T>::deleteNode(T todoID)
         // nodePtr, then delete nodePtr.
         if (nodePtr)
         {
-            previousNode->next = nodePtr->next;
+            nodePtr->prev->next = nodePtr->next;
             delete nodePtr;
         }
     }
 }
 
-template <typename T> void LinkedList<T>::displayNode() const // print out all Todo
+template <typename T>
+void LinkedList<T>::displayNode() const // print out all Todo
 {
     Node *nodePtr;
 
     nodePtr = head;
 
-    while(nodePtr)
+    while (nodePtr)
     {
         nodePtr->todo->displayTodoInfo();
         nodePtr = nodePtr->next;
     }
 }
 
-template <typename T> LinkedList<T>::~LinkedList()
+template <typename T>
+LinkedList<T>::~LinkedList()
 {
     Node *nodePtr;  // To traverse the list
     Node *nextNode; // To point to the next node
     // Position nodePtr at the head of the list.
     nodePtr = head;
     // While nodePtr is not at the end of the list...
-    while (nodePtr != nullptr) // while next is not nullptr 
+    while (nodePtr != nullptr) // while next is not nullptr
     {
         // Save a pointer to the next node.
-        nextNode = nodePtr->next; // assign nodePtr to nextPtr 
+        nextNode = nodePtr->next; // assign nodePtr to nextPtr
         // Delete the current node.
         delete nodePtr;
         // Position nodePtr at the next node.

@@ -5,6 +5,9 @@
 using namespace std;
 
 template <typename T>
+int Todo<T>::todoCount = 0;
+
+template <typename T>
 Todo<T>::Todo()
 {
     id = todoCount;
@@ -12,7 +15,20 @@ Todo<T>::Todo()
     isCompleted = false;
     date = "00/00/0000"; // dd/mm/yyyy/ tttt (time in military hours)
 
-    dateParser(date);
+    dateParser(date); // assign day, month and year
+
+    todoCount++; // increase the todoCount for ID use
+}
+
+template <typename T>
+Todo<T>::Todo(string _description, string _date)
+{
+    id = todoCount;
+    description = _description;
+    isCompleted = false;
+    date = _date; // dd/mm/yyyy/ tttt (time in military hours)
+
+    dateParser(date); // assign day, month, year
 
     todoCount++;
 }
@@ -127,5 +143,22 @@ bool Todo<T>::operator>(const Todo &other) const
     else
     {
         return this->day > other.getDay();
+    }
+}
+
+template <typename T>
+bool Todo<T>::operator<(const Todo &other) const
+{
+    if (this->year != other->getYear())
+    {
+        return this->year < other.getYear();
+    }
+    else if (this->month != other.getMonth)
+    {
+        return this->month < other.getMonth();
+    }
+    else
+    {
+        return this->day < other.getDay();
     }
 }

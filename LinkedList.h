@@ -6,34 +6,30 @@
 
 using namespace std;
 
-template <typename T> class LinkedList
+template <typename T>
+class LinkedList
 {
-    private:
-        struct Node
-        {
-            Todo *todo; // node would be sorted by date of todo.
-            Node *next;
-            Node *prev;
-        };
+private:
+    struct Node
+    {
+        Todo<T> *todo; // node would be sorted by date of todo.
+        Node *next;
+        Node *prev;
+    };
 
-        Node *head; // pointer to head of linkedlist
-        Node *tail; // pointer to tail (end) of linkedlist
-        
-    public:
-        LinkedList()
-        {
-            head = nullptr;
-            tail = nullptr;
-        }
+    Node *head; // pointer to head of linkedlist
+    Node *tail; // pointer to tail (end) of linkedlist
 
-        ~LinkedList();
-
-        void appendNode(Todo<T> *);
-        void editNode();
-        void searchNode();
-        void deleteNode(T);
-        void insertNode(Todo<T> *); // insert a todo to the list.
-        void displayNode() const;
+    Todo<T> *createTodo(); // return pointer to a newTodo
+public:
+    LinkedList();
+    ~LinkedList();
+    void appendNode();
+    void insertNode();          // insert a todo to the list.
+    void editNode(int);         // only able to edit the task and date, enter specific id of the node that is to be edited
+    void searchNode(int) const; // search by ID
+    void deleteNode(int);       // delete by ID
+    void displayNode() const;
 };
 
 #endif
