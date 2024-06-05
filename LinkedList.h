@@ -11,7 +11,7 @@ template <typename T> class LinkedList
     private:
         struct Node
         {
-            Todo todo;
+            Todo *todo; // node would be sorted by date of todo.
             Node *next;
             Node *prev;
         };
@@ -26,6 +26,14 @@ template <typename T> class LinkedList
             tail = nullptr;
         }
 
+        ~LinkedList();
+
+        void appendNode(Todo<T> *);
+        void editNode();
+        void searchNode();
+        void deleteNode(T);
+        void insertNode(Todo<T> *); // insert a todo to the list.
+        void displayNode() const;
 };
 
 #endif
