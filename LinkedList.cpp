@@ -16,8 +16,11 @@ Todo<T> *LinkedList<T>::createTodo()
 {
     string date, description;
 
-    cout << "date for task: " << date << endl
-         << "task: " << description << endl;
+    cout << "date for task: ";
+    cin >> date;
+
+    cout << "task: ";
+    cin >> description; 
 
     Todo<T> *newTodo = new Todo<T>(description, date);
 

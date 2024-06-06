@@ -15,7 +15,7 @@ private:
     string date;
     int day, month, year;
 
-    void dateParser();
+    void dateParser(string);
 
 public:
     Todo(); // Default Constructor

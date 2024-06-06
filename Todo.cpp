@@ -34,12 +34,12 @@ Todo<T>::Todo(string _description, string _date)
 }
 
 template <typename T>
-void Todo<T>::dateParser()
+void Todo<T>::dateParser(string _date)
 {
     string dayString, monthString, yearString;
 
     // date processing
-    istringstream dateStream(date);
+    istringstream dateStream(_date);
     getline(dateStream, dayString, '/');
     getline(dateStream, monthString, '/');
     getline(dateStream, yearString, '/');
