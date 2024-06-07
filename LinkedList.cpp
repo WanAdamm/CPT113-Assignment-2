@@ -20,7 +20,8 @@ Todo<T> *LinkedList<T>::createTodo()
     cin >> date;
 
     cout << "task: ";
-    cin >> description;
+
+    getline(cin, description, '\n');
 
     cout << endl;
 
@@ -58,6 +59,7 @@ void LinkedList<T>::appendNode()
 template <typename T>
 void LinkedList<T>::insertNode()
 {
+    // TODO: insert todo have problem when its not the head
     Todo<T> *newTodo = createTodo(); // create a new todo
 
     Node *newNode; // A new node
@@ -81,7 +83,7 @@ void LinkedList<T>::insertNode()
         nodePtr = head;
         // Skip all nodes whose value is less than newValue.
         // Value of node would be sorted in ascending order.
-        while (nodePtr != nullptr && nodePtr->todo < newTodo)
+        while (nodePtr != nullptr) // TODO: add a overloading operator to compare todo objects
         {
             nodePtr = nodePtr->next;
         }
@@ -93,7 +95,7 @@ void LinkedList<T>::insertNode()
             newNode->next = nodePtr;
             nodePtr->prev = newNode;
         }
-        else if (nodePtr = nullptr)
+        else if (nodePtr == nullptr)
         {
             newNode->prev = tail;
             tail->next = newNode;

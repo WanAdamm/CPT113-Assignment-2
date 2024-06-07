@@ -26,11 +26,27 @@ int main()
 
     while (isRunning)
     {
-        menu();
-
         int option;
-        cin >> option;
-        cout << endl;
+
+        bool validInput = false;
+
+        while (!validInput) // input validation for menu
+        {
+            menu();
+            cin >> option;
+            cout << endl;
+
+            if (cin.fail())
+            {
+                cout << "enter a valid option!" << endl;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            else
+            {
+                validInput = true;
+            }
+        }
 
         int id;
         switch (option)
@@ -66,11 +82,11 @@ int main()
             isRunning = false;
             break;
         default:
-            menu();
             break;
         }
 
         cin.ignore(INT_MAX, '\n'); // clearing cin buffer
+        cin.clear();
     }
 
     return 0;
