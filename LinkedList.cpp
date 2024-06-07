@@ -20,7 +20,9 @@ Todo<T> *LinkedList<T>::createTodo()
     cin >> date;
 
     cout << "task: ";
-    cin >> description; 
+    cin >> description;
+
+    cout << endl;
 
     Todo<T> *newTodo = new Todo<T>(description, date);
 
@@ -115,9 +117,13 @@ void LinkedList<T>::editNode(int id)
     nodePtr = head;
 
     cout << "1: edit date" << endl
-         << "2: edit task" << endl;
+         << "2: edit task" << endl
+         << endl;
 
     int option;
+
+    cin >> option;
+    cout << endl;
 
     while (nodePtr)
     {
@@ -137,6 +143,8 @@ void LinkedList<T>::editNode(int id)
                 cin >> desc;
                 nodePtr->todo->setDescription(desc);
             }
+
+            break;
         }
         else
         {
@@ -153,6 +161,7 @@ void LinkedList<T>::editNode(int id)
 template <typename T>
 void LinkedList<T>::searchNode(int id) const
 {
+    // TODO: add functionality for searchNode
     Node *nodePtr; // traverse the list
 
     nodePtr = head;
@@ -164,7 +173,8 @@ void LinkedList<T>::searchNode(int id) const
 
     if (nodePtr = nullptr)
     {
-        cout << "no such task found" << endl;
+        cout << "no such task found" << endl
+             << endl;
     }
 }
 
@@ -213,6 +223,7 @@ void LinkedList<T>::displayNode() const // print out all Todo
     while (nodePtr)
     {
         nodePtr->todo->displayTodoInfo();
+        cout << endl;
         nodePtr = nodePtr->next;
     }
 }

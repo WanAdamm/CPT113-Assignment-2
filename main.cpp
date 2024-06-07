@@ -14,6 +14,7 @@ void menu()
          << "4: search Todo" << endl
          << "5: delete Todo" << endl
          << "6: display all Todo" << endl
+         << "7: end program" << endl
          << endl;
 }
 
@@ -29,6 +30,7 @@ int main()
 
         int option;
         cin >> option;
+        cout << endl;
 
         int id;
         switch (option)
@@ -42,16 +44,19 @@ int main()
         case 3:
             cout << "enter Todo id: ";
             cin >> id;
+            cout << endl;
             todoProgram.editNode(id);
             break;
         case 4:
             cout << "enter Todo id: ";
             cin >> id;
+            cout << endl;
             todoProgram.searchNode(id);
             break;
         case 5:
             cout << "enter Todo id: ";
             cin >> id;
+            cout << endl;
             todoProgram.deleteNode(id);
             break;
         case 6:
@@ -59,11 +64,13 @@ int main()
             break;
         case 7:
             isRunning = false;
-            break;        
+            break;
         default:
             menu();
             break;
         }
+
+        cin.ignore(INT_MAX, '\n'); // clearing cin buffer
     }
 
     return 0;

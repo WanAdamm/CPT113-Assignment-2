@@ -4,6 +4,8 @@
 
 using namespace std;
 
+// TODO: input validation for date
+
 template <typename T>
 int Todo<T>::todoCount = 0;
 
@@ -40,6 +42,7 @@ void Todo<T>::dateParser(string _date)
 
     // date processing
     istringstream dateStream(_date);
+    cin.ignore();
     getline(dateStream, dayString, '/');
     getline(dateStream, monthString, '/');
     getline(dateStream, yearString, '/');
@@ -96,7 +99,7 @@ void Todo<T>::displayTodoInfo() const
 {
     string status;
 
-    if (isCompleted)
+    if (isCompleted) // isCompleted would be used to determine the status.
     {
         status = "completed";
     }
@@ -107,7 +110,7 @@ void Todo<T>::displayTodoInfo() const
 
     cout << "id: " << id << endl
          << "task: " << description << endl
-         << "status: " << isCompleted << endl
+         << "status: " << status << endl
          << "date: " << date << endl;
 }
 
