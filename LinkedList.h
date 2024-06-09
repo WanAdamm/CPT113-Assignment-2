@@ -24,7 +24,6 @@ private:
 public:
     LinkedList();
     ~LinkedList();
-    void appendNode();
     void insertNode();          // insert a todo to the list.
     void editNode(int);         // only able to edit the task and date, enter specific id of the node that is to be edited
     void searchNode(int) const; // search by ID

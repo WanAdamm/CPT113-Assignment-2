@@ -33,32 +33,6 @@ Todo<T> *LinkedList<T>::createTodo()
 }
 
 template <typename T>
-void LinkedList<T>::appendNode()
-{
-    Todo<T> *newTodo = createTodo(); // create a new todo
-
-    Node *nodePtr;
-    Node *newNode = new Node;
-
-    newNode->todo = newTodo;
-    newNode->prev = nullptr;
-    newNode->next = nullptr;
-
-    if (head == nullptr)
-    {
-        head = newNode;
-        tail = newNode;
-    }
-    else
-    {
-        nodePtr = tail;
-        newNode->prev = nodePtr;
-        nodePtr->next = newNode;
-        tail = newNode;
-    }
-}
-
-template <typename T>
 void LinkedList<T>::insertNode()
 {
     Todo<T> *newTodo = createTodo(); // create a new todo

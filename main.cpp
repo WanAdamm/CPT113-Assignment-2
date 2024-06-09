@@ -8,13 +8,12 @@ using namespace std;
 
 void menu()
 {
-    cout << "1: append new Todo" << endl
-         << "2: insert new Todo" << endl
-         << "3: edit Todo" << endl
-         << "4: search Todo" << endl
-         << "5: delete Todo" << endl
-         << "6: display all Todo" << endl
-         << "7: end program" << endl
+    cout << "1: insert new Todo" << endl
+         << "2: edit Todo" << endl
+         << "3: search Todo" << endl
+         << "4: delete Todo" << endl
+         << "5: display all Todo" << endl
+         << "6: end program" << endl
          << endl;
 }
 
@@ -52,33 +51,30 @@ int main()
         switch (option)
         {
         case 1:
-            todoProgram.appendNode();
-            break;
-        case 2:
             todoProgram.insertNode();
             break;
-        case 3:
+        case 2:
             cout << "enter Todo id: ";
             cin >> id;
             cout << endl;
             todoProgram.editNode(id);
             break;
-        case 4:
+        case 3:
             cout << "enter Todo id: ";
             cin >> id;
             cout << endl;
             todoProgram.searchNode(id);
             break;
-        case 5:
+        case 4:
             cout << "enter Todo id: ";
             cin >> id;
             cout << endl;
             todoProgram.deleteNode(id);
             break;
-        case 6:
+        case 5:
             todoProgram.displayNode();
             break;
-        case 7:
+        case 6:
             isRunning = false;
             break;
         default:
