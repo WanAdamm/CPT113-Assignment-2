@@ -29,7 +29,6 @@ public:
     void searchNode(int) const; // search by ID
     void deleteNode(int);       // delete by ID
     void displayNode() const;   // display all Todo
-    void displayNodeReverse() const; // display todo in reverse order
     void changeStatus(int);     // change status of todo by ID
 };
 
