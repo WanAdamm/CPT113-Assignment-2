@@ -257,17 +257,3 @@ LinkedList<T>::~LinkedList()
         nodePtr = nextNode;
     }
 }
-
-template <typename T>
-void LinkedList<T>::displayNodeReverse() const // function only to test if this can traverse both ways
-{
-    Node *nodePtr = new Node; // for traversal
-    nodePtr = tail;
-
-    while (nodePtr != nullptr)
-    {
-        nodePtr->todo->displayTodoInfo();
-        cout << endl;
-        nodePtr = nodePtr->prev;
-    }
-}
