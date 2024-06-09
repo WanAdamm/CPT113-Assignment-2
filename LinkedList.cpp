@@ -16,12 +16,14 @@ Todo<T> *LinkedList<T>::createTodo()
 {
     string date, description;
 
-    cout << "date for task: ";
-    cin >> date;
+    cin.ignore(INT_MAX, '\n');
+
+    cout << "date for task (dd/mm/yyyy): ";
+    getline(cin, date);
 
     cout << "task: ";
 
-    getline(cin, description, '\n');
+    getline(cin, description);
 
     cout << endl;
 
@@ -59,7 +61,6 @@ void LinkedList<T>::appendNode()
 template <typename T>
 void LinkedList<T>::insertNode()
 {
-    // TODO: insert todo have problem when its not the head
     Todo<T> *newTodo = createTodo(); // create a new todo
 
     Node *newNode; // A new node
@@ -83,7 +84,7 @@ void LinkedList<T>::insertNode()
         nodePtr = head;
         // Skip all nodes whose value is less than newValue.
         // Value of node would be sorted in ascending order.
-        while (nodePtr != nullptr) // TODO: add a overloading operator to compare todo objects
+        while (nodePtr != nullptr && newTodo > nodePtr->todo) // TODO: fix overloading operator 
         {
             nodePtr = nodePtr->next;
         }

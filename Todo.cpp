@@ -15,7 +15,7 @@ Todo<T>::Todo()
     id = todoCount;
     description = "";
     isCompleted = false;
-    date = "00/00/0000"; // dd/mm/yyyy/ tttt (time in military hours)
+    date = "00/00/0000"; // dd/mm/yyyy
 
     dateParser(date); // assign day, month and year
 
@@ -28,7 +28,7 @@ Todo<T>::Todo(string _description, string _date)
     id = todoCount;
     description = _description;
     isCompleted = false;
-    date = _date; // dd/mm/yyyy/ tttt (time in military hours)
+    date = _date; // dd/mm/yyyy
 
     dateParser(date); // assign day, month, year
 
@@ -36,16 +36,15 @@ Todo<T>::Todo(string _description, string _date)
 }
 
 template <typename T>
-void Todo<T>::dateParser(string _date)
+void Todo<T>::dateParser(string &_date)
 {
     string dayString, monthString, yearString;
 
     // date processing
     istringstream dateStream(_date);
-    cin.ignore();
     getline(dateStream, dayString, '/');
     getline(dateStream, monthString, '/');
-    getline(dateStream, yearString, '/');
+    getline(dateStream, yearString);
 
     day = stoi(dayString);
     month = stoi(monthString);
@@ -135,11 +134,11 @@ int Todo<T>::getDay() const
 template <typename T>
 bool Todo<T>::operator>(const Todo &other) const
 {
-    if (this->year != other->getYear())
+    if (this->year != other.getYear())
     {
         return this->year > other.getYear();
     }
-    else if (this->month != other.getMonth)
+    else if (this->month != other.getMonth())
     {
         return this->month > other.getMonth();
     }
@@ -152,11 +151,11 @@ bool Todo<T>::operator>(const Todo &other) const
 template <typename T>
 bool Todo<T>::operator<(const Todo &other) const
 {
-    if (this->year != other->getYear())
+    if (this->year != other.getYear())
     {
         return this->year < other.getYear();
     }
-    else if (this->month != other.getMonth)
+    else if (this->month != other.getMonth())
     {
         return this->month < other.getMonth();
     }
