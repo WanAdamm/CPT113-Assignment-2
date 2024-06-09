@@ -84,7 +84,7 @@ void LinkedList<T>::insertNode()
         nodePtr = head;
         // Skip all nodes whose value is less than newValue.
         // Value of node would be sorted in ascending order.
-        while (nodePtr != nullptr && newTodo > nodePtr->todo) // TODO: fix overloading operator 
+        while (nodePtr != nullptr && nodePtr->todo > newTodo)
         {
             nodePtr = nodePtr->next;
         }
@@ -164,7 +164,6 @@ void LinkedList<T>::editNode(int id)
 template <typename T>
 void LinkedList<T>::searchNode(int id) const
 {
-    // TODO: add functionality for searchNode
     Node *nodePtr; // traverse the list
 
     nodePtr = head;
@@ -174,9 +173,14 @@ void LinkedList<T>::searchNode(int id) const
         nodePtr = nodePtr->next;
     }
 
-    if (nodePtr = nullptr)
+    if (nodePtr->next = nullptr)
     {
         cout << "no such task found" << endl
+             << endl;
+    }
+    else
+    {
+        cout << nodePtr->todo->getDescription() << endl
              << endl;
     }
 }

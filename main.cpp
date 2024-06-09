@@ -4,8 +4,6 @@
 #include "LinkedList.h"
 #include "LinkedList.cpp"
 
-// TODO: multiple input needed when creating new todo
-
 using namespace std;
 
 void menu()
