@@ -6,20 +6,21 @@
 
 using namespace std;
 
-void menu()
+void menu() // function to print menu
 {
     cout << "1: insert new Todo" << endl
          << "2: edit Todo" << endl
          << "3: search Todo" << endl
          << "4: delete Todo" << endl
-         << "5: display all Todo" << endl
-         << "6: end program" << endl
+         << "5: change Todo status" << endl
+         << "6: display all Todo" << endl
+         << "7: end program" << endl
          << endl;
 }
 
 int main()
 {
-    bool isRunning = true;
+    bool isRunning = true; // if false would end the program
 
     LinkedList<int> todoProgram;
 
@@ -72,9 +73,16 @@ int main()
             todoProgram.deleteNode(id);
             break;
         case 5:
-            todoProgram.displayNode();
+            cout << "enter Todo id: ";
+            cin >> id;
+            cout << endl;
+            todoProgram.changeStatus(id);
             break;
         case 6:
+            todoProgram.displayNode();
+            todoProgram.displayNodeReverse();
+            break;
+        case 7:
             isRunning = false;
             break;
         default:

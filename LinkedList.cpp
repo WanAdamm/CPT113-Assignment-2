@@ -87,7 +87,7 @@ void LinkedList<T>::insertNode()
 }
 
 template <typename T>
-void LinkedList<T>::editNode(int id)
+void LinkedList<T>::editNode(int TodoID)
 {
     Node *nodePtr; // to traverse list
 
@@ -104,7 +104,7 @@ void LinkedList<T>::editNode(int id)
 
     while (nodePtr)
     {
-        if (nodePtr->todo->getID() == id)
+        if (nodePtr->todo->getID() == TodoID)
         {
             if (option == 1)
             {
@@ -136,18 +136,18 @@ void LinkedList<T>::editNode(int id)
 }
 
 template <typename T>
-void LinkedList<T>::searchNode(int id) const
+void LinkedList<T>::searchNode(int TodoID) const
 {
     Node *nodePtr; // traverse the list
 
     nodePtr = head;
 
-    while (nodePtr->todo->getID() != id)
+    while (nodePtr->todo->getID() != TodoID)
     {
         nodePtr = nodePtr->next;
     }
 
-    if (nodePtr->next = nullptr)
+    if (nodePtr == nullptr)
     {
         cout << "no such task found" << endl
              << endl;
@@ -210,6 +210,36 @@ void LinkedList<T>::displayNode() const // print out all Todo
 }
 
 template <typename T>
+void LinkedList<T>::changeStatus(int TodoID)
+{
+    Node *nodePtr = new Node; // for traversal
+
+    nodePtr = head;
+
+    while (nodePtr->todo->getID() != TodoID)
+    {
+        nodePtr = nodePtr->next;
+    }
+
+    if (nodePtr == nullptr)
+    {
+        cout << "no such task found" << endl
+             << endl;
+    }
+    else
+    {
+        bool status;
+        cout << "0: Not Completed" << endl
+             << "1: Completed" << endl
+             << endl;
+
+        cin >> status;
+
+        nodePtr->todo->setIsCompleted(status);
+    }
+}
+
+template <typename T>
 LinkedList<T>::~LinkedList()
 {
     Node *nodePtr;  // To traverse the list
@@ -225,5 +255,19 @@ LinkedList<T>::~LinkedList()
         delete nodePtr;
         // Position nodePtr at the next node.
         nodePtr = nextNode;
+    }
+}
+
+template <typename T>
+void LinkedList<T>::displayNodeReverse() const // function only to test if this can traverse both ways
+{
+    Node *nodePtr = new Node; // for traversal
+    nodePtr = tail;
+
+    while (nodePtr != nullptr)
+    {
+        nodePtr->todo->displayTodoInfo();
+        cout << endl;
+        nodePtr = nodePtr->prev;
     }
 }

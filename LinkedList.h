@@ -28,7 +28,9 @@ public:
     void editNode(int);         // only able to edit the task and date, enter specific id of the node that is to be edited
     void searchNode(int) const; // search by ID
     void deleteNode(int);       // delete by ID
-    void displayNode() const;
+    void displayNode() const;   // display all Todo
+    void displayNodeReverse() const; // display todo in reverse order
+    void changeStatus(int);     // change status of todo by ID
 };
 
 #endif
