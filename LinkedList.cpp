@@ -138,18 +138,18 @@ void LinkedList<T>::editNode(int TodoID)
 template <typename T>
 void LinkedList<T>::searchNode(int TodoID) const
 {
-    Node *nodePtr; // traverse the list
+    Node *nodePtr = head; // Start at the beginning of the list
 
-    nodePtr = head;
-
-    while (nodePtr->todo->getID() != TodoID)
+    // Traverse the list until we find the node or reach the end
+    while (nodePtr != nullptr && nodePtr->todo->getID() != TodoID)
     {
         nodePtr = nodePtr->next;
     }
 
+    // Check if we found the node
     if (nodePtr == nullptr)
     {
-        cout << "no such task found" << endl
+        cout << "No such task found" << endl
              << endl;
     }
     else

@@ -80,7 +80,6 @@ int main()
             break;
         case 6:
             todoProgram.displayNode();
-            todoProgram.displayNodeReverse();
             break;
         case 7:
             isRunning = false;

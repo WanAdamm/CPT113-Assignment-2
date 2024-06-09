@@ -15,6 +15,12 @@ private:
         Todo<T> *todo; // node would be sorted by date of todo.
         Node *next;
         Node *prev;
+
+        Node()
+        {
+            next = nullptr;
+            prev = nullptr;
+        }
     };
 
     Node *head; // pointer to head of linkedlist
