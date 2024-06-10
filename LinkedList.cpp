@@ -14,30 +14,34 @@ LinkedList<T>::LinkedList()
 template <typename T>
 Todo<T> *LinkedList<T>::createTodo()
 {
-    string date, description;
-    // int dateInt;
-
+    bool validInput = false;
+    Todo<T> *newTodo = nullptr;
     cin.ignore(INT_MAX, '\n');
 
-    cout << "date for task (dd/mm/yyyy): ";
-    getline(cin, date);
-
-    cout << "task: ";
-
-    getline(cin, description);
-
-    cout << endl;
-
-    Todo<T> *newTodo = nullptr;
-
-    try
+    while (!validInput)
     {
-        newTodo = new Todo<T>(description, date); // if the todo is invalid then return nothing
-    }
-    catch (const invalid_argument &e)
-    {
-        cerr << "ERROR: Can't create Todo, check your inputs." << endl
-             << endl;
+        try
+        {
+            string date, description;
+            // int dateInt;
+
+            cout << "date for task (dd/mm/yyyy): ";
+            getline(cin, date);
+
+            cout << "task: ";
+
+            getline(cin, description);
+
+            cout << endl;
+
+            newTodo = new Todo<T>(description, date); // if the todo is invalid then return nothing
+            validInput = true;
+        }
+        catch (const invalid_argument &e)
+        {
+            cerr << "ERROR: Can't create Todo, check your inputs." << endl
+                 << endl;
+        }
     }
 
     return newTodo;
