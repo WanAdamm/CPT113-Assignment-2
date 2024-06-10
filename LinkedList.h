@@ -18,7 +18,8 @@ private:
 
         Node()
         {
-            next = nullptr;
+            todo = nullptr;
+            next = nullptr; // always initiate all as nullptr to avoid problems
             prev = nullptr;
         }
     };

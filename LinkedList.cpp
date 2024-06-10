@@ -87,51 +87,47 @@ void LinkedList<T>::insertNode()
 }
 
 template <typename T>
-void LinkedList<T>::editNode(int TodoID)
+void LinkedList<T>::editNode(int TodoID) // TODO: sort again after editing the date
 {
     Node *nodePtr; // to traverse list
 
     nodePtr = head;
 
-    cout << "1: edit date" << endl
-         << "2: edit task" << endl
-         << endl;
-
-    int option;
-
-    cin >> option;
-    cout << endl;
-
-    while (nodePtr)
+    // Traverse the list until we find the node or reach the end
+    while (nodePtr != nullptr && nodePtr->todo->getID() != TodoID)
     {
-        if (nodePtr->todo->getID() == TodoID)
-        {
-            if (option == 1)
-            {
-                cout << "Enter new date: " << endl;
-                string date;
-                cin >> date;
-                nodePtr->todo->setDate(date);
-            }
-            else if (option == 2)
-            {
-                cout << "Enter edited task" << endl;
-                string desc;
-                cin >> desc;
-                nodePtr->todo->setDescription(desc);
-            }
-
-            break;
-        }
-        else
-        {
-            nodePtr = nodePtr->next;
-        }
+        nodePtr = nodePtr->next;
     }
 
-    if (nodePtr == nullptr) // TODO:rewrite in exception block
+    if (nodePtr == nullptr) // TODO: rewrite in exception block
     {
-        cout << "No such node found" << endl;
+        cout << "not found" << endl;
+    }
+    else
+    {
+        cout << "1: edit date" << endl
+             << "2: edit task" << endl
+             << endl;
+
+        int option;
+
+        cin >> option;
+        cout << endl;
+
+        if (option == 1)
+        {
+            cout << "Enter new date: " << endl;
+            string date;
+            cin >> date;
+            nodePtr->todo->setDate(date);
+        }
+        else if (option == 2)
+        {
+            cout << "Enter edited task" << endl;
+            string desc;
+            cin >> desc;
+            nodePtr->todo->setDescription(desc);
+        }
     }
 }
 
@@ -154,7 +150,15 @@ void LinkedList<T>::searchNode(int TodoID) const
     }
     else
     {
+        string status = "not completed";
+
+        if (nodePtr->todo->getIsCompleted() == 1)
+        {
+            status = "completed";
+        }
+
         cout << nodePtr->todo->getDescription() << endl
+             << status << endl
              << endl;
     }
 }
@@ -216,7 +220,8 @@ void LinkedList<T>::changeStatus(int TodoID)
 
     nodePtr = head;
 
-    while (nodePtr->todo->getID() != TodoID)
+    // Traverse the list until we find the node or reach the end
+    while (nodePtr != nullptr && nodePtr->todo->getID() != TodoID)
     {
         nodePtr = nodePtr->next;
     }
