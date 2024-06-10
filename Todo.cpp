@@ -4,8 +4,6 @@
 
 using namespace std;
 
-// TODO: input validation for date
-
 template <typename T>
 int Todo<T>::todoCount = 0;
 
@@ -90,7 +88,15 @@ void Todo<T>::setDate(string _date)
 template <typename T>
 string Todo<T>::getDate() const
 {
-    return date;
+    string dayString, monthString, yearString, dateString;
+
+    dayString = to_string(day);
+    monthString = to_string(month);
+    yearString = to_string(year);
+
+    dateString = dayString + "/" + monthString + "/" + yearString;
+
+    return dateString;
 }
 
 template <typename T>
@@ -110,7 +116,7 @@ void Todo<T>::displayTodoInfo() const
     cout << "id: " << id << endl
          << "task: " << description << endl
          << "status: " << status << endl
-         << "date: " << date << endl;
+         << "date: " << this->getDate() << endl;
 }
 
 template <typename T>

@@ -15,6 +15,7 @@ template <typename T>
 Todo<T> *LinkedList<T>::createTodo()
 {
     string date, description;
+    // int dateInt;
 
     cin.ignore(INT_MAX, '\n');
 
@@ -27,7 +28,17 @@ Todo<T> *LinkedList<T>::createTodo()
 
     cout << endl;
 
-    Todo<T> *newTodo = new Todo<T>(description, date);
+    Todo<T> *newTodo = nullptr;
+
+    try
+    {
+        newTodo = new Todo<T>(description, date); // if the todo is invalid then return nothing
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << "ERROR: Can't create Todo, check your inputs." << endl
+             << endl;
+    }
 
     return newTodo;
 }
@@ -99,35 +110,44 @@ void LinkedList<T>::editNode(int TodoID) // TODO: sort again after editing the d
         nodePtr = nodePtr->next;
     }
 
-    if (nodePtr == nullptr) // TODO: rewrite in exception block
+    try
     {
-        cout << "not found" << endl;
+        if (nodePtr == nullptr)
+        {
+            throw runtime_error("ERROR: No Todo with such ID found.");
+            cout << endl;
+        }
+        else
+        {
+            cout << "1: edit date" << endl
+                 << "2: edit task" << endl
+                 << endl;
+
+            int option;
+
+            cin >> option;
+            cout << endl;
+
+            if (option == 1)
+            {
+                cout << "Enter new date: " << endl;
+                string date;
+                cin >> date;
+                nodePtr->todo->setDate(date);
+            }
+            else if (option == 2)
+            {
+                cout << "Enter edited task" << endl;
+                string desc;
+                cin >> desc;
+                nodePtr->todo->setDescription(desc);
+            }
+        }
     }
-    else
+    catch (const exception &e)
     {
-        cout << "1: edit date" << endl
-             << "2: edit task" << endl
+        cerr << e.what() << endl
              << endl;
-
-        int option;
-
-        cin >> option;
-        cout << endl;
-
-        if (option == 1)
-        {
-            cout << "Enter new date: " << endl;
-            string date;
-            cin >> date;
-            nodePtr->todo->setDate(date);
-        }
-        else if (option == 2)
-        {
-            cout << "Enter edited task" << endl;
-            string desc;
-            cin >> desc;
-            nodePtr->todo->setDescription(desc);
-        }
     }
 }
 
@@ -142,23 +162,30 @@ void LinkedList<T>::searchNode(int TodoID) const
         nodePtr = nodePtr->next;
     }
 
-    // Check if we found the node
-    if (nodePtr == nullptr)
+    try
     {
-        cout << "No such task found" << endl
-             << endl;
-    }
-    else
-    {
-        string status = "not completed";
-
-        if (nodePtr->todo->getIsCompleted() == 1)
+        // Check if we found the node
+        if (nodePtr == nullptr)
         {
-            status = "completed";
+            throw runtime_error("ERROR: No Todo with such ID found.");
         }
+        else
+        {
+            string status = "not completed";
 
-        cout << nodePtr->todo->getDescription() << endl
-             << status << endl
+            if (nodePtr->todo->getIsCompleted() == 1)
+            {
+                status = "completed";
+            }
+
+            cout << nodePtr->todo->getDescription() << endl
+                 << status << endl
+                 << endl;
+        }
+    }
+    catch (const exception &e)
+    {
+        cerr << e.what() << endl
              << endl;
     }
 }
@@ -167,34 +194,45 @@ template <class T>
 void LinkedList<T>::deleteNode(int todoID)
 {
     Node *nodePtr; // To traverse the list
-    // If the list is empty, do nothing.
-    if (!head)
+
+    try
+    {
+        // If the list is empty, do nothing.
+        if (!head)
+            throw runtime_error("ERROR: No Todo in the list yet!");
         return;
-    // Determine if the first node is the one.
-    if (head->todo->getID() == todoID)
-    {
-        nodePtr = head->next;
-        delete head;
-        head = nodePtr;
+        // Determine if the first node is the one.
+        if (head->todo->getID() == todoID)
+        {
+            nodePtr = head->next;
+            delete head;
+            nodePtr->prev = nullptr;
+            head = nodePtr;
+        }
+        else
+        {
+            // Initialize nodePtr to head of list
+            nodePtr = head;
+            // Skip all nodes whose value member is
+            // not equal to num.
+            while (nodePtr != nullptr && nodePtr->todo->getID() != todoID)
+            {
+                nodePtr = nodePtr->next;
+            }
+            // If nodePtr is not at the end of the list,
+            // link the previous node to the node after
+            // nodePtr, then delete nodePtr.
+            if (nodePtr)
+            {
+                nodePtr->prev->next = nodePtr->next;
+                delete nodePtr;
+            }
+        }
     }
-    else
+    catch (const exception &e)
     {
-        // Initialize nodePtr to head of list
-        nodePtr = head;
-        // Skip all nodes whose value member is
-        // not equal to num.
-        while (nodePtr != nullptr && nodePtr->todo->getID() != todoID)
-        {
-            nodePtr = nodePtr->next;
-        }
-        // If nodePtr is not at the end of the list,
-        // link the previous node to the node after
-        // nodePtr, then delete nodePtr.
-        if (nodePtr)
-        {
-            nodePtr->prev->next = nodePtr->next;
-            delete nodePtr;
-        }
+        cerr << e.what() << endl
+             << endl;
     }
 }
 
