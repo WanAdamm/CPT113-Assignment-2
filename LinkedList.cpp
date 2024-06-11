@@ -73,9 +73,9 @@ void LinkedList<T>::insertNode()
         nodePtr = head;
         // Skip all nodes whose value is less than newValue.
         // Value of node would be sorted in ascending order.
-        while (nodePtr != nullptr && nodePtr->todo < newTodo) // sort in ascending list
+        while (nodePtr != nullptr && *(newNode->todo) > *(nodePtr->todo)) // sort in ascending list
         {
-            cout << (nodePtr->todo < newTodo) << endl;
+            cout << (*(newNode->todo) > *(nodePtr->todo)) << endl; // TODO: delete after debug
             nodePtr = nodePtr->next;
         }
         // If the new node is to be the 1st in the list,
@@ -214,8 +214,6 @@ void LinkedList<T>::deleteNode(int todoID)
         // Determine if the first node is the one.
         if (head->todo->getID() == todoID)
         {
-            cout << "HEAD!!! " << endl; // TODO: delete after debugging
-
             if (head->next)
             {
                 nodePtr = head->next;
