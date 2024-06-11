@@ -37,6 +37,7 @@ public:
     void deleteNode(int);       // delete by ID
     void displayNode() const;   // display all Todo
     void changeStatus(int);     // change status of todo by ID
+    void sortList();
 };
 
 #endif

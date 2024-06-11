@@ -73,8 +73,9 @@ void LinkedList<T>::insertNode()
         nodePtr = head;
         // Skip all nodes whose value is less than newValue.
         // Value of node would be sorted in ascending order.
-        while (nodePtr != nullptr && nodePtr->todo > newTodo)
+        while (nodePtr != nullptr && nodePtr->todo < newTodo) // sort in ascending list
         {
+            cout << (nodePtr->todo < newTodo) << endl;
             nodePtr = nodePtr->next;
         }
         // If the new node is to be the 1st in the list,
@@ -102,7 +103,7 @@ void LinkedList<T>::insertNode()
 }
 
 template <typename T>
-void LinkedList<T>::editNode(int TodoID) // TODO: sort again after editing the date
+void LinkedList<T>::editNode(int TodoID)
 {
     Node *nodePtr; // to traverse list
 
@@ -138,6 +139,8 @@ void LinkedList<T>::editNode(int TodoID) // TODO: sort again after editing the d
                 string date;
                 cin >> date;
                 nodePtr->todo->setDate(date);
+
+                sortList(); // make sure list are sorted after the date is changed
             }
             else if (option == 2)
             {
@@ -201,16 +204,29 @@ void LinkedList<T>::deleteNode(int todoID)
 
     try
     {
-        // If the list is empty, do nothing.
+        // If the list is empty, throw an error.
         if (!head)
+        {
             throw runtime_error("ERROR: No Todo in the list yet!");
-        return;
+            return;
+        }
+
         // Determine if the first node is the one.
         if (head->todo->getID() == todoID)
         {
-            nodePtr = head->next;
+            cout << "HEAD!!! " << endl; // TODO: delete after debugging
+
+            if (head->next)
+            {
+                nodePtr = head->next;
+                nodePtr->prev = nullptr;
+            }
+            else
+            {
+                nodePtr = nullptr;
+            }
+
             delete head;
-            nodePtr->prev = nullptr;
             head = nodePtr;
         }
         else
@@ -226,12 +242,20 @@ void LinkedList<T>::deleteNode(int todoID)
             // If nodePtr is not at the end of the list,
             // link the previous node to the node after
             // nodePtr, then delete nodePtr.
+
             if (nodePtr)
             {
-                nodePtr->prev->next = nodePtr->next;
+                if (nodePtr->next)
+                    nodePtr->next->prev = nodePtr->prev;
+                if (nodePtr->prev)
+                    nodePtr->prev->next = nodePtr->next;
+                if (nodePtr == tail) // If the node to be deleted is the tail
+                    tail = nodePtr->prev;
                 delete nodePtr;
             }
         }
+
+        sortList(); // make sure list are sorted after a deletion event
     }
     catch (const exception &e)
     {
@@ -243,15 +267,28 @@ void LinkedList<T>::deleteNode(int todoID)
 template <typename T>
 void LinkedList<T>::displayNode() const // print out all Todo
 {
-    Node *nodePtr;
-
-    nodePtr = head;
-
-    while (nodePtr)
+    try
     {
-        nodePtr->todo->displayTodoInfo();
-        cout << endl;
-        nodePtr = nodePtr->next;
+        Node *nodePtr;
+
+        nodePtr = head;
+
+        if (!nodePtr)
+        {
+            throw runtime_error("ERROR: Empty list");
+        }
+
+        while (nodePtr)
+        {
+            nodePtr->todo->displayTodoInfo();
+            cout << endl;
+            nodePtr = nodePtr->next;
+        }
+    }
+    catch (const exception &e)
+    {
+        cerr << e.what() << endl
+             << endl;
     }
 }
 
@@ -284,6 +321,52 @@ void LinkedList<T>::changeStatus(int TodoID)
 
         nodePtr->todo->setIsCompleted(status);
     }
+}
+
+template <typename T>
+void LinkedList<T>::sortList() // used for sorting the List by Todos date
+{
+    if (!head || !head->next)
+    {
+        // List is empty or has only one element, no need to sort
+        return;
+    }
+
+    bool swapped;
+    Node *temp;
+
+    do
+    {
+        swapped = false;
+        Node *current = head;
+
+        while (current->next != nullptr)
+        {
+            if (current->todo > current->next->todo)
+            {
+                // Swap the nodes
+                if (current == head)
+                {
+                    head = current->next;
+                }
+                temp = current->next;
+                current->next = temp->next;
+
+                if (temp->next != nullptr)
+                {
+                    temp->next->prev = current;
+                }
+                temp->next = current;
+                temp->prev = current->prev;
+                current->prev = temp;
+                swapped = true;
+            }
+            else
+            {
+                current = current->next;
+            }
+        }
+    } while (swapped);
 }
 
 template <typename T>
