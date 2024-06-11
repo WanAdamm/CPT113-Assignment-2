@@ -50,6 +50,12 @@ void Todo<T>::dateParser(string &_date)
 }
 
 template <typename T>
+void Todo<T>::setID(int _id)
+{
+    id = _id;
+}
+
+template <typename T>
 int Todo<T>::getID() const
 {
     return id;
@@ -83,6 +89,7 @@ template <typename T>
 void Todo<T>::setDate(string _date)
 {
     date = _date;
+    dateParser(_date);
 }
 
 template <typename T>

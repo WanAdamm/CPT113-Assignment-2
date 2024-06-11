@@ -20,7 +20,8 @@ private:
 public:
     Todo(); // Default Constructor
     Todo(string, string);
-    int getID() const;             // no setter for id since it is automatically assigned on object instantiation.
+    void setID(int);                  // ID setter
+    int getID() const;             // getter for ID
     void setDescription(string);   // setter for description
     string getDescription() const; // description getter
     void setIsCompleted(bool);     // isCompleted setter
