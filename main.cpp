@@ -32,19 +32,27 @@ int main()
 
         while (!validInput) // input validation for menu
         {
-            menu();
-            cin >> option;
-            cout << endl;
+            try
+            {
+                menu();
+                cin >> option;
+                cout << endl;
 
-            if (cin.fail())
-            {
-                cout << "enter a valid option!" << endl;
-                cin.clear();
-                cin.ignore(INT_MAX, '\n');
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(INT_MAX, '\n');
+                    throw runtime_error("ERROR: Invalid Option");
+                }
+                else
+                {
+                    validInput = true;
+                }
             }
-            else
+            catch (const exception &e)
             {
-                validInput = true;
+                cerr << e.what() << endl
+                     << endl;
             }
         }
 

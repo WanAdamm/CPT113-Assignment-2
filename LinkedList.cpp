@@ -197,16 +197,22 @@ void LinkedList<T>::editNode(int TodoID)
                 insertNode(nodePtr->todo->getDescription(), date, nodePtr->todo->getID());
                 deleteNode(nodePtr->todo->getID());
 
-                //delete nodePtr;
+                // delete nodePtr;
             }
             else if (option == 2)
             {
                 cout << "Enter edited task" << endl;
                 string desc;
-                cin >> desc;
+                cin.ignore(INT_MAX, '\n');
+                getline(cin, desc);
                 nodePtr->todo->setDescription(desc);
             }
         }
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << "ERROR: Invalid Date" << endl
+             << endl;
     }
     catch (const exception &e)
     {
