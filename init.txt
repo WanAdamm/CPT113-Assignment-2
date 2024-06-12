@@ -1,7 +1,7 @@
-date,task,
-10/12/2023,Go to a Baby Shower,
-24/6/2024,Eat a Croissant at a Cafe in Paris,
-13/1/2025,Join a Union,
-22/6/2024,Host a Foreign Exchange Student,
-21/6/2024,Try Every Ben & Jerry's Ice Cream Flavor,
-1/5/2025,Learn How to Drive a Motorcycle,
+date,task,status
+10/12/2023,Go to a Baby Shower,0
+21/6/2024,Try Every Ben & Jerry's Ice Cream Flavor,0
+22/6/2024,Host a Foreign Exchange Student,0
+24/6/2024,Eat a Croissant at a Cafe in Paris,0
+13/1/2025,Join a Union,1
+10/12/2060,wash car,1

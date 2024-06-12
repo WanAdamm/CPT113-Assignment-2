@@ -19,13 +19,23 @@ void LinkedList<T>::initNode() // Initialize the LinkedList with some todo in it
 {
     fstream DataFile("init.txt");
 
-    string date, desc, token;
+    string date, desc, status, token;
+    bool isCompleted = false;
 
     getline(DataFile, token); // skip first line of file
-    while(getline(DataFile, date, ','))
+    while (getline(DataFile, date, ','))
     {
         getline(DataFile, desc, ',');
-        insertNode(desc, date);
+        getline(DataFile, status);
+        if (status == "0")
+        {
+            isCompleted = false;
+        }
+        else
+        {
+            isCompleted = true;
+        }
+        insertNode(desc, date, isCompleted);
     }
 }
 
@@ -120,11 +130,12 @@ void LinkedList<T>::insertNode()
 }
 
 template <typename T>
-void LinkedList<T>::insertNode(string description, string date)
+void LinkedList<T>::insertNode(string description, string date, bool status)
 {
     Todo<T> *newTodo = new Todo<T>; // create a new todo
     newTodo->setDescription(description);
     newTodo->setDate(date);
+    newTodo->setIsCompleted(status);
 
     Node *newNode; // A new node
     Node *nodePtr; // To traverse the list
@@ -459,6 +470,9 @@ void LinkedList<T>::changeStatus(int TodoID)
 template <typename T>
 LinkedList<T>::~LinkedList()
 {
+    fstream DataFile("init.txt", ios::trunc | ios::out);
+    DataFile << "date,task,status" << endl;
+
     Node *nodePtr;  // To traverse the list
     Node *nextNode; // To point to the next node
     // Position nodePtr at the head of the list.
@@ -466,6 +480,18 @@ LinkedList<T>::~LinkedList()
     // While nodePtr is not at the end of the list...
     while (nodePtr != nullptr) // while next is not nullptr
     {
+        string status = "0";
+
+        if (nodePtr->todo->getIsCompleted())
+        {
+            status = "1";
+        }
+        else 
+        {
+            status = "0";
+        }
+
+        DataFile << nodePtr->todo->getDate() << "," << nodePtr->todo->getDescription() << "," << status << endl;
         // Save a pointer to the next node.
         nextNode = nodePtr->next; // assign nodePtr to nextPtr
         // Delete the current node.

@@ -33,7 +33,7 @@ public:
     ~LinkedList();
     void initNode();                      // initialize todo
     void insertNode();                    // insert a todo to the list.
-    void insertNode(string, string);      // overloaded insertNode
+    void insertNode(string, string, bool);      // overloaded insertNode
     void insertNode(string, string, int); // overloaded insertNode
     void editNode(int);                   // only able to edit the task and date, enter specific id of the node that is to be edited
     void searchNode(int) const;           // search by ID
