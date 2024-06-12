@@ -31,13 +31,15 @@ private:
 public:
     LinkedList();
     ~LinkedList();
-    void insertNode();               // insert a todo to the list.
+    void initNode();                      // initialize todo
+    void insertNode();                    // insert a todo to the list.
+    void insertNode(string, string);      // overloaded insertNode
     void insertNode(string, string, int); // overloaded insertNode
-    void editNode(int);              // only able to edit the task and date, enter specific id of the node that is to be edited
-    void searchNode(int) const;      // search by ID
-    void deleteNode(int);            // delete by ID
-    void displayNode() const;        // display all Todo
-    void changeStatus(int);          // change status of todo by ID
+    void editNode(int);                   // only able to edit the task and date, enter specific id of the node that is to be edited
+    void searchNode(int) const;           // search by ID
+    void deleteNode(int);                 // delete by ID
+    void displayNode() const;             // display all Todo
+    void changeStatus(int);               // change status of todo by ID
 };
 
 #endif

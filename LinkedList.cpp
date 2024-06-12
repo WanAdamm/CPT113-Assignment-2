@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "LinkedList.h"
 #include "Todo.h"
 
@@ -9,6 +10,23 @@ LinkedList<T>::LinkedList()
 {
     head = nullptr;
     tail = nullptr;
+
+    initNode();
+}
+
+template <typename T>
+void LinkedList<T>::initNode() // Initialize the LinkedList with some todo in it
+{
+    fstream DataFile("init.txt");
+
+    string date, desc, token;
+
+    getline(DataFile, token); // skip first line of file
+    while(getline(DataFile, date, ','))
+    {
+        getline(DataFile, desc, ',');
+        insertNode(desc, date);
+    }
 }
 
 template <typename T>
@@ -51,6 +69,62 @@ template <typename T>
 void LinkedList<T>::insertNode()
 {
     Todo<T> *newTodo = createTodo(); // create a new todo
+
+    Node *newNode; // A new node
+    Node *nodePtr; // To traverse the list
+
+    // Allocate a new node and store newValue there.
+    newNode = new Node;
+    newNode->todo = newTodo;
+    newNode->prev = nullptr;
+    newNode->next = nullptr;
+    // If there are no nodes in the list
+    // make newNode the first node
+    if (head == nullptr)
+    {
+        head = newNode;
+        tail = newNode;
+    }
+    else // Otherwise, insert newNode
+    {
+        // Position nodePtr at the head of list.
+        nodePtr = head;
+        // Skip all nodes whose value is less than newValue.
+        // Value of node would be sorted in ascending order.
+        while (nodePtr != nullptr && *(newNode->todo) > *(nodePtr->todo)) // sort in ascending list
+        {
+            nodePtr = nodePtr->next;
+        }
+        // If the new node is to be the 1st in the list,
+        // insert it before all other nodes.
+        if (nodePtr == head)
+        {
+            head = newNode;
+            newNode->next = nodePtr;
+            nodePtr->prev = newNode;
+        }
+        else if (nodePtr == nullptr)
+        {
+            newNode->prev = tail;
+            tail->next = newNode;
+            tail = newNode;
+        }
+        else // inserting in middle of list
+        {
+            nodePtr->prev->next = newNode; // link the previous node to a newnode since we want to insert it in the middle
+            newNode->prev = nodePtr->prev; // link the newnode to previous node
+            nodePtr->prev = newNode;
+            newNode->next = nodePtr;
+        }
+    }
+}
+
+template <typename T>
+void LinkedList<T>::insertNode(string description, string date)
+{
+    Todo<T> *newTodo = new Todo<T>; // create a new todo
+    newTodo->setDescription(description);
+    newTodo->setDate(date);
 
     Node *newNode; // A new node
     Node *nodePtr; // To traverse the list
